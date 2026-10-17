@@ -28,8 +28,8 @@ function App() {
       <div>
         <button onClick={handleLoad} disabled={loading}>Load Pokémon</button>
 
-        <PokemonCard pokemon={pair.previous} />
-        <PokemonCard pokemon={pair.current} />
+        <PokemonCard pokemon={pair.previous} placeholder='No previous Pokémon'/>
+        <PokemonCard pokemon={pair.current} placeholder='Press the button to load a Pokémon'/>
       </div>
     </div>
   );
