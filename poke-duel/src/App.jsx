@@ -2,7 +2,6 @@ import { useState } from 'react'
 import './App.css'
 import { getRandomPokemon } from './services/pokeApi'
 import PokemonCard from './components/PokemonCard/PokemonCard';
-
 function App() {
   const [pair, setPair] = useState({ previous: null, current: null });
   const [loading, setLoading] = useState(false);

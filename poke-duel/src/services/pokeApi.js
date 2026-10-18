@@ -1,4 +1,5 @@
 let countPromise = null;
+const typeCache = {};
 
 export async function getCount() {
     if (!countPromise) {
@@ -45,5 +46,26 @@ function normalizePokemon(raw) {
             .slice()
             .sort((a, b) => a.slot - b.slot)
             .map((entry) => entry.type.name)
+    };
+};
+
+export async function getType(name) {
+    if(!typeCache[name]) {
+        typeCache[name] = fetch(`https://pokeapi.co/api/v2/type/${name}`)
+        .then((response) => {
+            if(!response.ok) throw new Error(`Type request failed for flying: ${response.status}`);
+            return response.json();
+        })
+        .then((data) => normalizeType(data));
+    };
+
+    return typeCache[name];
+}
+
+function normalizeType(raw) {
+    return {
+        doubleTo: raw.damage_relations.double_damage_to.map(entry => entry.name),
+        halfTo: raw.damage_relations.half_damage_to.map(entry => entry.name),
+        noTo: raw.damage_relations.no_damage_to.map(entry => entry.name)
     };
 };
