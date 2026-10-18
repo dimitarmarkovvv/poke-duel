@@ -1,10 +1,13 @@
 let countPromise = null;
 
 export async function getCount() {
-    if(!countPromise) {
+    if (!countPromise) {
         countPromise = fetch(`https://pokeapi.co/api/v2/pokemon?limit=1`)
-        .then((response) => response.json())
-        .then((data) => data.count)
+            .then((response) => {
+                if (!response.ok) throw new Error(`Pokemon count request failed: ${response.status}`);
+                return response.json();
+            })
+            .then((data) => data.count)
     }
 
     return countPromise;
@@ -16,11 +19,16 @@ export async function getRandomPokemon() {
     const offset = Math.floor(Math.random() * count);
 
     const listResponse = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=1&offset=${offset}`);
+
+    if (!listResponse.ok) throw new Error(`Pokemon list request failed: ${listResponse.status} at offset ${offset}`);
+
     const listData = await listResponse.json();
 
     const pokemonUrl = listData.results[0].url;
 
     const pokemonResponse = await fetch(pokemonUrl);
+
+    if (!pokemonResponse.ok) throw new Error(`Pokemon request failed: ${pokemonResponse.status} for ${pokemonUrl}`);
     const pokemonData = await pokemonResponse.json();
 
     return normalizePokemon(pokemonData);
