@@ -9,7 +9,7 @@ export async function getCount() {
                 return response.json();
             })
             .then((data) => data.count)
-    }
+    };
 
     return countPromise;
 };
@@ -53,7 +53,7 @@ export async function getType(name) {
     if(!typeCache[name]) {
         typeCache[name] = fetch(`https://pokeapi.co/api/v2/type/${name}`)
         .then((response) => {
-            if(!response.ok) throw new Error(`Type request failed for flying: ${response.status}`);
+            if(!response.ok) throw new Error(`Type request failed for ${name}: ${response.status}`);
             return response.json();
         })
         .then((data) => normalizeType(data));

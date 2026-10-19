@@ -7,6 +7,6 @@ function Controls({ onLoad, loading }) {
             {loading ? 'Loading…' : 'Load Pokémon'}
         </button>
     );
-}
+};
 
 export default memo(Controls);

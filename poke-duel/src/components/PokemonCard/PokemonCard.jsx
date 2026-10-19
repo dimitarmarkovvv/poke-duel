@@ -10,7 +10,7 @@ function PokemonCard({ pokemon, placeholder = 'No Pokémon yet', status }) {
                 </div>
             </div>
         );
-    }
+    };
 
     return (
         <div className={`card frame-${pokemon.types[0]}${status ? ` card-${status}` : ''}`}>
@@ -22,11 +22,15 @@ function PokemonCard({ pokemon, placeholder = 'No Pokémon yet', status }) {
                 </div>
 
                 <div className="card-art">
-                    <img
-                        className="card-sprite"
-                        src={pokemon.image}
-                        alt={`${pokemon.name} sprite`}
-                    />
+                    {pokemon.image ? (
+                        <img
+                            className="card-sprite"
+                            src={pokemon.image}
+                            alt={`${pokemon.name} sprite`}
+                        />
+                    ) : (
+                        <p className="card-empty">No sprite</p>
+                    )}
                 </div>
 
                 <div className="card-types">
@@ -44,6 +48,6 @@ function PokemonCard({ pokemon, placeholder = 'No Pokémon yet', status }) {
             </div>
         </div>
     );
-}
+};
 
 export default memo(PokemonCard);

@@ -20,6 +20,6 @@ function Counters({ stats }) {
             </div>
         </div>
     );
-}
+};
 
 export default memo(Counters);
