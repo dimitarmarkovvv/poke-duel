@@ -1,22 +1,24 @@
-import { useState } from 'react'
-import './App.css'
-import { getRandomPokemon, getType } from './services/pokeApi'
+import { useState } from 'react';
+import './App.css';
+import { getRandomPokemon, getType } from './services/pokeApi';
 import PokemonCard from './components/PokemonCard/PokemonCard';
 import { battle, NEW_WINS, PREVIOUS_WINS, TYPE_MATCH } from './utils/battle/battle';
+import Controls from './components/Controls/Controls';
+import { useCallback } from 'react';
 
 function App() {
-  const [pair, setPair] = useState({ previous: null, current: null });
+  const [pair, setPair] = useState({ previous: null, latest: null });
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [matches, setMatches] = useState(0);
   const [newWins, setNewWins] = useState(0);
   const [previousWins, setPreviousWins] = useState(0);
 
-  const handleLoad = async () => {
+  const handleLoad = useCallback(async () => {
     setLoading(true);
 
     try {
-      const previous = pair.current;
+      const previous = pair.latest;
       const next = await getRandomPokemon();
 
       if (previous) {
@@ -37,17 +39,17 @@ function App() {
         setResult(outcome);
 
         if (outcome === TYPE_MATCH) {
-          setMatches(matches + 1);
+          setMatches((n) => n +  1);
         } else if (outcome === NEW_WINS) {
-          setNewWins(newWins + 1);
+          setNewWins((n) => n +  1);
         } else if (outcome === PREVIOUS_WINS) {
-          setPreviousWins(previousWins + 1);
+          setPreviousWins((n) => n +  1);
         };
       } else {
         setResult(null);
       };
 
-      setPair({ previous, current: next });
+      setPair({previous,latest: next});
     } catch (e) {
 
       console.error(e);
@@ -56,18 +58,18 @@ function App() {
 
       setLoading(false);
     };
-  };
+  }, [pair.latest]);
 
   return (
     <div>
       <div>
         <p>Matches: {matches} | New wins: {newWins} | Previous wins: {previousWins}</p>
-        <button onClick={handleLoad} disabled={loading}>Load Pokémon</button>
+        <Controls onLoad={handleLoad} loading={loading} />
 
         <div className='arena'>
           <PokemonCard pokemon={pair.previous} placeholder='No previous Pokémon' />
           <h2>{result}</h2>
-          <PokemonCard pokemon={pair.current} placeholder='Press the button to load a Pokémon' />
+          <PokemonCard pokemon={pair.latest} placeholder='Press the button to load a Pokémon' />
         </div>
       </div>
     </div>

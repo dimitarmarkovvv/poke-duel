@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 function PokemonCard({pokemon, placeholder = 'No Pokémon yet'}) {
     return (
         <div>
@@ -15,4 +17,4 @@ function PokemonCard({pokemon, placeholder = 'No Pokémon yet'}) {
         </div>)
 }
 
-export default PokemonCard;
+export default memo(PokemonCard);
