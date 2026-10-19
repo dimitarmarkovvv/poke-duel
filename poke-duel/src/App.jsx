@@ -9,6 +9,7 @@ import Counters from './components/Counters/Counters';
 function App() {
   const [pair, setPair] = useState({ previous: null, latest: null });
   const [loading, setLoading] = useState(false);
+  const [shaking, setShaking] = useState(false);
   const [result, setResult] = useState(null);
   const [matches, setMatches] = useState(0);
   const [newWins, setNewWins] = useState(0);
@@ -16,6 +17,8 @@ function App() {
 
   const handleLoad = useCallback(async () => {
     setLoading(true);
+    setShaking(true);
+    setTimeout(() => setShaking(false), 800);
 
     try {
       const previous = pair.latest;
@@ -83,7 +86,7 @@ function App() {
 
       <Controls onLoad={handleLoad} loading={loading} />
 
-      <div className={loading ? 'arena arena-shaking' : 'arena'}>
+      <div className={shaking ? 'arena arena-shaking' : 'arena'}>
         <PokemonCard
           pokemon={pair.previous}
           placeholder='No previous Pokémon'
