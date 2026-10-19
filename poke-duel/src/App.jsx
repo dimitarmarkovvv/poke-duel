@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import './App.css';
 import { getRandomPokemon, getType } from './services/pokeApi';
 import PokemonCard from './components/PokemonCard/PokemonCard';
 import { battle, NEW_WINS, PREVIOUS_WINS, TYPE_MATCH } from './utils/battle/battle';
 import Controls from './components/Controls/Controls';
-import { useCallback } from 'react';
+import Counters from './components/Counters/Counters';
 
 function App() {
   const [pair, setPair] = useState({ previous: null, latest: null });
@@ -60,10 +60,16 @@ function App() {
     };
   }, [pair.latest]);
 
+  const stats = useMemo(() => ({
+    matches,
+    newWins,
+    previousWins
+  }), [matches,newWins,previousWins]);
+
   return (
     <div>
       <div>
-        <p>Matches: {matches} | New wins: {newWins} | Previous wins: {previousWins}</p>
+        <Counters stats={stats} />
         <Controls onLoad={handleLoad} loading={loading} />
 
         <div className='arena'>
