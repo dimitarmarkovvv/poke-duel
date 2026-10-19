@@ -1,0 +1,35 @@
+.load-button {
+  padding: 18px 30px;
+  font-family: 'Press Start 2P', 'Trebuchet MS', monospace;
+  font-size: 13px;
+  line-height: 1.4;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow:
+    0 2px 0 #8a5a00,
+    2px 0 0 #8a5a00,
+    -2px 0 0 #8a5a00,
+    0 -2px 0 #8a5a00;
+  background: linear-gradient(180deg, #ffd84d 0%, #f2b705 55%, #d99a00 100%);
+  border: 3px solid #7a4f00;
+  border-radius: 14px;
+  box-shadow: 0 6px 0 #7a4f00, 0 12px 20px rgba(80, 50, 0, 0.35);
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.15s ease;
+}
+
+.load-button:hover:not(:disabled) {
+  filter: brightness(1.06);
+}
+
+.load-button:active:not(:disabled) {
+  transform: translateY(5px);
+  box-shadow: 0 1px 0 #7a4f00, 0 4px 10px rgba(80, 50, 0, 0.3);
+}
+
+.load-button:disabled {
+  cursor: not-allowed;
+  filter: grayscale(0.55);
+  opacity: 0.75;
+}

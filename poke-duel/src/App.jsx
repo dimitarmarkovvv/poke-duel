@@ -66,17 +66,40 @@ function App() {
     previousWins
   }), [matches,newWins,previousWins]);
 
-  return (
-    <div>
-      <div>
-        <Counters stats={stats} />
-        <Controls onLoad={handleLoad} loading={loading} />
+  const previousStatus =
+    result === PREVIOUS_WINS ? 'winner' : result === NEW_WINS ? 'loser' : null;
 
-        <div className='arena'>
-          <PokemonCard pokemon={pair.previous} placeholder='No previous Pokémon' />
-          <h2>{result}</h2>
-          <PokemonCard pokemon={pair.latest} placeholder='Press the button to load a Pokémon' />
+  const latestStatus =
+    result === NEW_WINS ? 'winner' : result === PREVIOUS_WINS ? 'loser' : null;
+
+  return (
+    <div className="app">
+      <header>
+        <h1 className="title">Poke <span>Duel</span></h1>
+        <p className="subtitle">Load a pokemon and see who wins the type matchup</p>
+      </header>
+
+      <Counters stats={stats} />
+
+      <Controls onLoad={handleLoad} loading={loading} />
+
+      <div className={loading ? 'arena arena-shaking' : 'arena'}>
+        <PokemonCard
+          pokemon={pair.previous}
+          placeholder='No previous Pokémon'
+          status={previousStatus}
+        />
+
+        <div className="verdict">
+          <p className="vs">VS</p>
+          {result && <p className="verdict-text">{result}</p>}
         </div>
+
+        <PokemonCard
+          pokemon={pair.latest}
+          placeholder='Press the button to load a Pokémon'
+          status={latestStatus}
+        />
       </div>
     </div>
   );
