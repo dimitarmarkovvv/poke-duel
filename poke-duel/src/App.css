@@ -69,6 +69,20 @@
     0 8px 16px rgba(120, 40, 30, 0.35);
 }
 
+.verdict-error {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.5px;
+  text-align: center;
+  padding: 12px 16px;
+  border-radius: 14px;
+  color: #7a1b1b;
+  background: linear-gradient(180deg, #ffe3e3, #ffd0d0);
+  border: 3px solid #b03a2e;
+  box-shadow: 0 6px 0 rgba(176, 58, 46, 0.35);
+}
+
 .verdict-text {
   font-size: 14px;
   font-weight: 700;

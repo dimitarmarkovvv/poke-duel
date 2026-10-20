@@ -9,6 +9,10 @@ export async function getCount() {
                 return response.json();
             })
             .then((data) => data.count)
+            .catch((error) => {
+                countPromise = null;
+                throw error;
+            });
     };
 
     return countPromise;
@@ -56,7 +60,11 @@ export async function getType(name) {
             if(!response.ok) throw new Error(`Type request failed for ${name}: ${response.status}`);
             return response.json();
         })
-        .then((data) => normalizeType(data));
+        .then((data) => normalizeType(data))
+        .catch((error) => {
+            delete typeCache[name];
+            throw error;
+        });
     };
 
     return typeCache[name];

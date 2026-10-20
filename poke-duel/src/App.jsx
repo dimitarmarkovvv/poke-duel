@@ -11,6 +11,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [shaking, setShaking] = useState(false);
   const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
   const [matches, setMatches] = useState(0);
   const [newWins, setNewWins] = useState(0);
   const [previousWins, setPreviousWins] = useState(0);
@@ -18,6 +19,7 @@ function App() {
   const handleLoad = useCallback(async () => {
     setLoading(true);
     setShaking(true);
+    setError(null);
     setTimeout(() => setShaking(false), 800);
 
     try {
@@ -54,9 +56,8 @@ function App() {
 
       setPair({previous,latest: next});
     } catch (e) {
-
       console.error(e);
-
+      setError('Could not reach PokeAPI. Check your connection and try again.');
     } finally {
 
       setLoading(false);
@@ -95,7 +96,8 @@ function App() {
 
         <div className="verdict">
           <p className="vs">VS</p>
-          {result && <p className="verdict-text">{result}</p>}
+          {error && <p className="verdict-error">{error}</p>}
+          {!error && result && <p className="verdict-text">{result}</p>}
         </div>
 
         <PokemonCard
